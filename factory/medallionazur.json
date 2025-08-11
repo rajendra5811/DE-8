@@ -1,0 +1,9 @@
+{
+	"name": "medallionazur",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "287f5709-0d46-4e0a-b234-b89fb69112dd",
+		"tenantId": "211964cb-65ea-4226-836a-8bb58911b98c"
+	}
+}
