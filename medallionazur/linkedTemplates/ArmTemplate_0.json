@@ -248,9 +248,16 @@
 						]
 					},
 					{
-						"name": "Web1",
+						"name": "success",
 						"type": "WebActivity",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Data_ingestion",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -265,6 +272,35 @@
 							"url": "https://prod-07.centralindia.logic.azure.com:443/workflows/52cba91730bd4836a05dae392bb83dbb/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=gW68RcsqdvLkdq_CoCbuU4uUZA51x9fVTbodSad1j2Q",
 							"body": {
 								"value": "{\n    \n    \"pipelineName\":\"@{pipeline().Pipeline}\",\n         \"status\":\"succeeded\",\n          \"runid\":\"@{pipeline().RunId}\",\n           \"time\":\"@{utcNow()}\"\n    \n}",
+								"type": "Expression"
+							}
+						}
+					},
+					{
+						"name": "failure",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Data_ingestion",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"method": "POST",
+							"headers": {},
+							"url": "https://prod-07.centralindia.logic.azure.com:443/workflows/52cba91730bd4836a05dae392bb83dbb/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=gW68RcsqdvLkdq_CoCbuU4uUZA51x9fVTbodSad1j2Q",
+							"body": {
+								"value": "{\n    \n    \"pipelineName\":\"@{pipeline().Pipeline}\",\n         \"status\":\"failure\",\n          \"runid\":\"@{pipeline().RunId}\",\n           \"time\":\"@{utcNow()}\"\n    \n}",
 								"type": "Expression"
 							}
 						}
